@@ -3,6 +3,9 @@ Try to make a mario like game in Ruby. I am using the following gems :
 * Gosu : For making the game
 * byebug : For debugging
 
+## To-do list
+* Collision of the character
+
 ## My help
 I used the following links to create this game :
 
@@ -18,3 +21,5 @@ The main philosophy is following this code, but I changed a lot of things :
 
 ### For the camera which following the character :
 * https://stackoverflow.com/questions/32741782/looping-background-image-in-ruby-side-scrolling-game
+The methode I used is very different, but it's a good example to understand how to do the background scrolling.
+

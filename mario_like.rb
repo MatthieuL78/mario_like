@@ -12,7 +12,7 @@ class Game < Gosu::Window
     @background_x = 0
     @background = Gosu::Image.new('image/background.png', tileable: true)
     @player = Player.new
-    @player.warp(100, 200)
+    @player.warp(0, 200)
     @jump_allow = true
     @x1, @y1 = 0, 0
   end
@@ -37,13 +37,14 @@ class Game < Gosu::Window
       end
     end
     @jump_allow = @player.jump_allow_check
-    @player.move(@screen_width)
+    @player.move(@screen_width, @background_x)
   end
 
   def draw
     @player.draw
-    if (@background_x < 1 && @background_x - 256 > @background.width * -1)
-      p @background_x 
+    if (@background_x < 100 && @background_x - 256 > @background.width * -1)
+      p @background_x
+      @background_x = 0 if @background_x > 0 
       @background.draw(@background_x, 0, 0)
     end
   end
