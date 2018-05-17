@@ -9,15 +9,29 @@ class Game < Gosu::Window
     @screen_height = 236
     super @screen_width, @screen_height
     self.caption = 'Mario like'
-    @background_image = Gosu::Image.new('image/background.png', tileable: true)
+    @background_x = 0
+    @background = Gosu::Image.new('image/background.png', tileable: true)
     @player = Player.new
     @player.warp(100, 200)
     @jump_allow = true
+    @x1, @y1 = 0, 0
   end
 
   def update
-    @player.accelerate_left if Gosu.button_down? Gosu::KB_LEFT
-    @player.accelerate_right if Gosu.button_down? Gosu::KB_RIGHT
+    p "char veloc = #{@player.player_coordinates_check[2]}"
+    p "screen veloc = #{@backgroundkground_x}"
+    if Gosu.button_down? Gosu::KB_LEFT
+      @player.accelerate_left
+      if (@player.player_coordinates_check[0] < @screen_width/2 - 5)
+        @background_x -= @player.player_coordinates_check[2]
+      end
+    end
+    if Gosu.button_down? Gosu::KB_RIGHT
+      @player.accelerate_right 
+      if (@player.player_coordinates_check[0] > @screen_width/2 + 5)
+        @background_x -= @player.player_coordinates_check[2]
+      end
+    end
     if Gosu.button_down? Gosu::KB_SPACE
       if @jump_allow == true
         @jump_allow = false
@@ -29,8 +43,12 @@ class Game < Gosu::Window
   end
 
   def draw
-    @player.draw
-    @background_image.draw(0, 0, 0)
+    @player.draw 
+    @background.draw(@background_x, 0, 0)
+  end
+
+  def button_down(id)
+    Gosu::window.close if id == Gosu::KbEscape
   end
 end
 

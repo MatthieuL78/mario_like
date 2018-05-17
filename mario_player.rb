@@ -2,24 +2,25 @@
 class Player
   def initialize
     @image = Gosu::Image.new('image/mario.png')
-    @x = @y = @vel_x = @vel_y = 0.0
+    @player_x = @player_y = @vel_x = @vel_y = 0.0
     @x_speed = 0.1
     @y_speed = 0.005
-    @timer = 0
+    @jump_delta = 0
     @jump_allow = true
     @jump_height = 25
   end
-
+  
+  # Teleport the caracter
   def warp(x, y)
-    @x = x
-    @y = y
+    @player_x = x
+    @player_y = y
   end
 
-  # Jump caracter method
+  # Jump character method
   def jump_height_variation
-    if @timer > 0
+    if @jump_delta > 0
       jump_go_up
-    elsif @timer < 0
+    elsif @jump_delta < 0
       jump_go_down
     end
     check_jump
@@ -27,34 +28,34 @@ class Player
 
   def jump_go_up
     @allow = false
-    @timer.times do |index|
+    @jump_delta.times do |index|
       @vel_y -= Gosu.offset_y(100, @y_speed)
-      @y += @vel_y
+      @player_y += @vel_y
     end
-    @timer -= 1
+    @jump_delta -= 1
   end
 
   def jump_go_down
-    (@timer * -1).times do |index|
+    (@jump_delta * -1).times do |index|
       @vel_y += Gosu.offset_y(100, @y_speed)
-      @y += @vel_y
+      @player_y += @vel_y
     end
-    @timer += 1
+    @jump_delta += 1
   end
 
   def jump_initialization
-    @timer = @jump_height
+    @jump_delta = @jump_height
     @jump_allow = false
     @down_y = @jump_height * -1
   end
 
   def check_jump
-    if @timer.zero? and @jump_allow == false
+    if @jump_delta.zero? and @jump_allow == false
       @vel_y = 0  
-      @timer = @down_y
+      @jump_delta = @down_y
       @down_y = 0
     end
-    if @timer == -1 and @jump_allow == false
+    if @jump_delta == -1 and @jump_allow == false
       @vel_y = 0  
       @jump_allow = true
     end
@@ -75,14 +76,23 @@ class Player
 
   # Caracter movement
   def move(screen_width)
-    @x += @vel_x
-    @x %= screen_width
+    @player_x += @vel_x
+    # Block the ice effect
+    unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+      @vel_x = 0
+    end
+    @player_x %= screen_width
     @vel_x *= 0.95
     jump_height_variation
+  end
+  
+  # Caracter coordinates and velocity
+  def player_coordinates_check
+    @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y]
   end
 
   # Draw caracter
   def draw
-    @image.draw_rot(@x, @y, 1, 0)
+    @image.draw_rot(@player_x, @player_y, 1, 0)
   end
 end
