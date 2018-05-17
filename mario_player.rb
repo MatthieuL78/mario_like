@@ -4,7 +4,7 @@ class Player
     @image = Gosu::Image.new('image/mario.png')
     @x = @y = @vel_x = @vel_y = 0.0
     @x_speed = 0.1
-    @jump_height_delta = 0.2
+    @jump_height_delta = 0.8
     @jump_allow = true
     @jump_height = 25
   end
@@ -26,15 +26,17 @@ class Player
 
   def jump_go_up
     @allow = false
-    @vel_y.times do
-      @y -= @jump_height_delta
+    @vel_y.times do |index|
+      p "Index = #{index} / UP = #{Gosu.offset_y(100, @vel_y/24.0)}"
+      @y -= Gosu.offset_y(100, @vel_y/24.0)
     end
     @vel_y -= 1
   end
 
   def jump_go_down
-    (@vel_y * -1).times do
-      @y += @jump_height_delta
+    (@vel_y * -1).times do |index|
+      p "Index = #{index} / Down = #{Gosu.offset_y(100, @vel_y/25*-1)}"
+      @y += Gosu.offset_y(100, @vel_y/24.0*-1)
     end
     @vel_y += 1
   end
