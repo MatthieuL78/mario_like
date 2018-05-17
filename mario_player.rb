@@ -4,7 +4,8 @@ class Player
     @image = Gosu::Image.new('image/mario.png')
     @x = @y = @vel_x = @vel_y = 0.0
     @x_speed = 0.1
-    @jump_height_delta = 0.8
+    @y_speed = 0.005
+    @timer = 0
     @jump_allow = true
     @jump_height = 25
   end
@@ -16,9 +17,9 @@ class Player
 
   # Jump caracter method
   def jump_height_variation
-    if @vel_y > 0
+    if @timer > 0
       jump_go_up
-    elsif @vel_y < 0
+    elsif @timer < 0
       jump_go_down
     end
     check_jump
@@ -26,33 +27,35 @@ class Player
 
   def jump_go_up
     @allow = false
-    @vel_y.times do |index|
-      p "Index = #{index} / UP = #{Gosu.offset_y(100, @vel_y/24.0)}"
-      @y -= Gosu.offset_y(100, @vel_y/24.0)
+    @timer.times do |index|
+      @vel_y -= Gosu.offset_y(100, @y_speed)
+      @y += @vel_y
     end
-    @vel_y -= 1
+    @timer -= 1
   end
 
   def jump_go_down
-    (@vel_y * -1).times do |index|
-      p "Index = #{index} / Down = #{Gosu.offset_y(100, @vel_y/25*-1)}"
-      @y += Gosu.offset_y(100, @vel_y/24.0*-1)
+    (@timer * -1).times do |index|
+      @vel_y += Gosu.offset_y(100, @y_speed)
+      @y += @vel_y
     end
-    @vel_y += 1
+    @timer += 1
   end
 
   def jump_initialization
-    @vel_y = @jump_height
+    @timer = @jump_height
     @jump_allow = false
     @down_y = @jump_height * -1
   end
 
   def check_jump
-    if @vel_y.zero? and @jump_allow == false
-      @vel_y = @down_y
+    if @timer.zero? and @jump_allow == false
+      @vel_y = 0  
+      @timer = @down_y
       @down_y = 0
     end
-    if @vel_y == -1 and @jump_allow == false
+    if @timer == -1 and @jump_allow == false
+      @vel_y = 0  
       @jump_allow = true
     end
   end
