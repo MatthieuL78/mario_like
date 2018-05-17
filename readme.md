@@ -14,6 +14,7 @@ I used the following links to create this game :
 
 ### For the jump :
 * https://stackoverflow.com/questions/41913771/how-can-i-jump-on-gosu-gem-from-ruby
+
 The main philosophy is following this code, but I changed a lot of things :
 * Gravity effect when the character is falling
 * I used the Gosu.offset for the velocity
@@ -21,5 +22,6 @@ The main philosophy is following this code, but I changed a lot of things :
 
 ### For the camera which following the character :
 * https://stackoverflow.com/questions/32741782/looping-background-image-in-ruby-side-scrolling-game
+
 The methode I used is very different, but it's a good example to understand how to do the background scrolling.
 
