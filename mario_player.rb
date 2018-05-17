@@ -76,9 +76,15 @@ class Player
 
   # Caracter movement
   def move(screen_width)
-    @player_x += @vel_x
+    if (@player_x < screen_width/2 + 15 and Gosu.button_down? Gosu::KB_RIGHT)
+      @player_x += @vel_x
+    end
+    if (@player_x > screen_width/2 - 15 and Gosu.button_down? Gosu::KB_LEFT)
+      @player_x += @vel_x
+    end
+    
     # Block the ice effect
-    unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+    unless (Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT) or (Gosu.button_down? Gosu::KB_RIGHT and Gosu.button_down? Gosu::KB_LEFT)
       @vel_x = 0
     end
     @player_x %= screen_width

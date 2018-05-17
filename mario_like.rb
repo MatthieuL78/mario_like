@@ -18,8 +18,6 @@ class Game < Gosu::Window
   end
 
   def update
-    p "char veloc = #{@player.player_coordinates_check[2]}"
-    p "screen veloc = #{@backgroundkground_x}"
     if Gosu.button_down? Gosu::KB_LEFT
       @player.accelerate_left
       if (@player.player_coordinates_check[0] < @screen_width/2 - 5)
@@ -43,8 +41,11 @@ class Game < Gosu::Window
   end
 
   def draw
-    @player.draw 
-    @background.draw(@background_x, 0, 0)
+    @player.draw
+    if (@background_x < 1 && @background_x - 256 > @background.width * -1)
+      p @background_x 
+      @background.draw(@background_x, 0, 0)
+    end
   end
 
   def button_down(id)
