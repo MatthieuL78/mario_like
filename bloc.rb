@@ -18,7 +18,8 @@ class Bloc
 
   def collision(player)
     if (player[0] < @bloc_x + @width && player[0] + player[4] > @bloc_x && player[1] < @bloc_y + @height && player[1] + player[5] > @bloc_y)
-      p 'PROUT AND CACA'
+      return true
     end
+    return false
   end
 end

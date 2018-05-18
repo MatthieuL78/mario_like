@@ -45,8 +45,9 @@ class Game < Gosu::Window
     end
     #@bloc.collision(@player,@bloc)
     @jump_allow = @player.jump_allow_check
-    @player.move(@sc_wdth, @bg_x)
-    @bloc.collision(@player.player_coordinates_check)
+    unless @bloc.collision(@player.player_coordinates_check) == true
+      @player.move(@sc_wdth, @bg_x)
+    end
   end
 
   def draw
