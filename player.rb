@@ -7,7 +7,7 @@ class Player
     @y_speed = 0.005
     @jump_delta = 0
     @jump_allow = true
-    @jump_height = 25
+    @jump_height_max = 30
   end
 
   # Teleport the caracter
@@ -17,6 +17,13 @@ class Player
   end
 
   # Jump character method
+  def jump_initialization
+    @jump_delta = @jump_height_max
+    @jump_allow = false
+    @vel_y = jump_velocity_max(@jump_height_max)
+    @down_y = @jump_height_max * -1
+  end
+
   def jump_height_variation
     jump_go_up if @jump_delta > 0
     jump_go_down if @jump_delta < 0
@@ -24,10 +31,9 @@ class Player
   end
 
   def jump_go_up
-    @allow = false
     @jump_delta.times do
       @vel_y -= Gosu.offset_y(100, @y_speed)
-      @player_y += @vel_y
+      @player_y -= @vel_y
     end
     @jump_delta -= 1
   end
@@ -40,12 +46,6 @@ class Player
     @jump_delta += 1
   end
 
-  def jump_initialization
-    @jump_delta = @jump_height
-    @jump_allow = false
-    @down_y = @jump_height * -1
-  end
-
   def check_jump
     return false unless @jump_allow == false
     if @jump_delta.zero?
@@ -56,6 +56,16 @@ class Player
       @vel_y = 0
       @jump_allow = true
     end
+  end
+
+  def jump_velocity_max(jump_height_max)
+    jump_height_max.times do
+      jump_height_max.times do
+        @vel_y += Gosu.offset_y(100, @y_speed)
+      end
+      jump_height_max -= 1
+    end
+    @vel_y
   end
 
   def jump_allow_check
