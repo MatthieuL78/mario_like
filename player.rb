@@ -103,7 +103,7 @@ class Player
     @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y]
   end
 
-  # Draw caracter
+  # Draw character
   def draw
     @image.draw_rot(@player_x, @player_y, 1, 0)
   end
