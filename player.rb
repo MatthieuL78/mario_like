@@ -9,7 +9,7 @@ class Player
     @jump_allow = true
     @jump_height = 25
   end
-  
+
   # Teleport the caracter
   def warp(x, y)
     @player_x = x
@@ -18,17 +18,14 @@ class Player
 
   # Jump character method
   def jump_height_variation
-    if @jump_delta > 0
-      jump_go_up
-    elsif @jump_delta < 0
-      jump_go_down
-    end
+    jump_go_up if @jump_delta > 0
+    jump_go_down if @jump_delta < 0
     check_jump
   end
 
   def jump_go_up
     @allow = false
-    @jump_delta.times do |index|
+    @jump_delta.times do
       @vel_y -= Gosu.offset_y(100, @y_speed)
       @player_y += @vel_y
     end
@@ -36,7 +33,7 @@ class Player
   end
 
   def jump_go_down
-    (@jump_delta * -1).times do |index|
+    (@jump_delta * -1).times do
       @vel_y += Gosu.offset_y(100, @y_speed)
       @player_y += @vel_y
     end
@@ -50,14 +47,15 @@ class Player
   end
 
   def check_jump
-    if @jump_delta.zero? and @jump_allow == false
-      @vel_y = 0  
-      @jump_delta = @down_y
-      @down_y = 0
-    end
-    if @jump_delta == -1 and @jump_allow == false
-      @vel_y = 0  
-      @jump_allow = true
+    if @jump_allow == false
+      if @jump_delta.zero?
+        @vel_y = 0
+        @jump_delta = @down_y
+        @down_y = 0
+      elsif @jump_delta == -1
+        @vel_y = 0
+        @jump_allow = true
+      end
     end
   end
 
@@ -75,36 +73,22 @@ class Player
   end
 
   # Caracter movement
-  def move(screen_width, background_x)
-    p "etape 3"
+  def move(sc_wdth, bg_x)
     # movement depending of the player_x
-    if (@player_x > screen_width/2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or background_x >= 0
-      p "etape 4"
-      if (@player_x > 2)
-        p "etape 5"
-        @player_x += @vel_x
-      end
+    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or bg_x >= 0 
+      @player_x += @vel_x if @player_x > 2
     end
     # movement depending of the player_x
-    p "background_x = #{background_x}"
-    if (@player_x < screen_width/2 + 15 and Gosu.button_down? Gosu::KB_RIGHT) or background_x <= -1595
-      p "etape 4"
-      p "background_x = #{background_x}"
-      if (@player_x < 234)
-        @player_x += @vel_x
-        p "etape 5"
-      end
+    if (@player_x < sc_wdth / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT) or bg_x <= -1595
+      @player_x += @vel_x if @player_x < 234
     end
-    
     # Block the ice effect
-    unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
-      @vel_x = 0
-    end
-    @player_x %= screen_width
+    @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+    @player_x %= sc_wdth
     @vel_x *= 0.95
     jump_height_variation
   end
-  
+
   # Caracter coordinates and velocity
   def player_coordinates_check
     @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y]
