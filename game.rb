@@ -1,6 +1,6 @@
 require 'gosu'
 require 'byebug'
-require_relative 'mario_player.rb'
+require_relative 'player.rb'
 
 # Game initialization
 class Game < Gosu::Window
@@ -14,22 +14,30 @@ class Game < Gosu::Window
     @player = Player.new
     @player.warp(0, 200)
     @jump_allow = true
-    @x1, @y1 = 0, 0
   end
 
   def update
+    # player go left
     if Gosu.button_down? Gosu::KB_LEFT
       @player.accelerate_left
-      if (@player.player_coordinates_check[0] < @screen_width/2 - 5)
+      # movement depending of the background
+      if (@player.player_coordinates_check[0] < @screen_width/2 - 15)
+        p "etape 1"
         @background_x -= @player.player_coordinates_check[2]
       end
+      p "etape 2"
     end
+    # player go right
     if Gosu.button_down? Gosu::KB_RIGHT
       @player.accelerate_right 
-      if (@player.player_coordinates_check[0] > @screen_width/2 + 5)
+      # movement depending of the background
+      if (@player.player_coordinates_check[0] > @screen_width/2 + 15)
+        p "etape 1"
         @background_x -= @player.player_coordinates_check[2]
       end
+      p "etape 2"
     end
+    # player jump
     if Gosu.button_down? Gosu::KB_SPACE
       if @jump_allow == true
         @jump_allow = false
@@ -43,8 +51,9 @@ class Game < Gosu::Window
   def draw
     @player.draw
     if (@background_x < 100 && @background_x - 256 > @background.width * -1)
-      p @background_x
+      # we block the extremities of the background
       @background_x = 0 if @background_x > 0 
+      @background_x = -1595 if @background_x < -1595
       @background.draw(@background_x, 0, 0)
     end
   end

@@ -76,11 +76,24 @@ class Player
 
   # Caracter movement
   def move(screen_width, background_x)
-    if (@player_x < screen_width/2 + 15 and Gosu.button_down? Gosu::KB_RIGHT)
-      @player_x += @vel_x
+    p "etape 3"
+    # movement depending of the player_x
+    if (@player_x > screen_width/2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or background_x >= 0
+      p "etape 4"
+      if (@player_x > 2)
+        p "etape 5"
+        @player_x += @vel_x
+      end
     end
-    if (@player_x > screen_width/2 - 15 and Gosu.button_down? Gosu::KB_LEFT)
-      @player_x += @vel_x
+    # movement depending of the player_x
+    p "background_x = #{background_x}"
+    if (@player_x < screen_width/2 + 15 and Gosu.button_down? Gosu::KB_RIGHT) or background_x <= -1595
+      p "etape 4"
+      p "background_x = #{background_x}"
+      if (@player_x < 234)
+        @player_x += @vel_x
+        p "etape 5"
+      end
     end
     
     # Block the ice effect
