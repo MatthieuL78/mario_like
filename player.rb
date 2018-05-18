@@ -11,9 +11,9 @@ class Player
   end
 
   # Teleport the caracter
-  def warp(x, y)
-    @player_x = x
-    @player_y = y
+  def warp(init_x, init_y)
+    @player_x = init_x
+    @player_y = init_y
   end
 
   # Jump character method
@@ -47,15 +47,14 @@ class Player
   end
 
   def check_jump
-    if @jump_allow == false
-      if @jump_delta.zero?
-        @vel_y = 0
-        @jump_delta = @down_y
-        @down_y = 0
-      elsif @jump_delta == -1
-        @vel_y = 0
-        @jump_allow = true
-      end
+    return false unless @jump_allow == false
+    if @jump_delta.zero?
+      @vel_y = 0
+      @jump_delta = @down_y
+      @down_y = 0
+    elsif @jump_delta == -1
+      @vel_y = 0
+      @jump_allow = true
     end
   end
 
@@ -75,7 +74,7 @@ class Player
   # Caracter movement
   def move(sc_wdth, bg_x)
     # movement depending of the player_x
-    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or bg_x >= 0 
+    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or bg_x >= 0
       @player_x += @vel_x if @player_x > 2
     end
     # movement depending of the player_x

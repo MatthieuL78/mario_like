@@ -46,12 +46,11 @@ class Game < Gosu::Window
 
   def draw
     @player.draw
-    if @bg_x < 100 && @bg_x - 256 > @background.width * -1
-      # we block the extremities of the background
-      @bg_x = 0 if @bg_x > 0
-      @bg_x = -1595 if @bg_x < -1595
-      @background.draw(@bg_x, 0, 0)
-    end
+    return false unless @bg_x < 100 && @bg_x - 256 > @background.width * -1
+    # we block the extremities of the background
+    @bg_x = 0 if @bg_x > 0
+    @bg_x = -1595 if @bg_x < -1595
+    @background.draw(@bg_x, 0, 0)
   end
 
   def button_down(id)
