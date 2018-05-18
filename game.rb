@@ -61,7 +61,7 @@ class Game < Gosu::Window
   end
 
   def button_down(id)
-    Gosu::window.close if id == Gosu::KbEscape
+    close if id == Gosu::KbEscape
   end
 end
 
