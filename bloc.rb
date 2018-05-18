@@ -1,10 +1,10 @@
 # Bloc class
 class Bloc
-  def initialization
+  def initialize
     @image = Gosu::Image.new('image/bloc.png')
     @bloc_x = @bloc_y = 0
-    @width = 110
-    @height = 180
+    @width = 50
+    @height = 10
   end
 
   def warp(init_x, init_y)
@@ -13,13 +13,12 @@ class Bloc
   end
 
   def draw
-    @image.draw_rot(@bloc_x, @bloc_y, 1, 0)
+    @image.draw(@bloc_x, @bloc_y, 4, 4)
   end
 
-  # def collision(player, bloc)
-  #   if (player.player_x < bloc.x + bloc.width && player.player_x + player.player_width > bloc.x
-  #   	&& player.player_y < bloc.y + bloc.height && player.player_y + player.player_y > bloc.y) do
-  #     player.image = nil
-  #   end
-  # end
+  def collision(player)
+    if (player[0] < @bloc_x + @width && player[0] + player[4] > @bloc_x && player[1] < @bloc_y + @height && player[1] + player[5] > @bloc_y)
+      p 'PROUT AND CACA'
+    end
+  end
 end

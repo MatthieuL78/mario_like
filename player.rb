@@ -3,6 +3,8 @@ class Player
   def initialize
     @image = Gosu::Image.new('image/mario.png')
     @player_x = @player_y = @vel_x = @vel_y = 0.0
+    @height = 25
+    @width = 25
     @x_speed = 0.1
     @y_speed = 0.005
     @jump_delta = 0
@@ -96,11 +98,12 @@ class Player
     @player_x %= sc_wdth
     @vel_x *= 0.95
     jump_height_variation
+
   end
 
   # Caracter coordinates and velocity
   def player_coordinates_check
-    @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y]
+    @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
   end
 
   # Draw character
