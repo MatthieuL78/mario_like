@@ -6,6 +6,8 @@ require 'json'
 # end
 
 class GameWindow < Gosu::Window
+  # Our map is : 3392 width and 224 height
+  # It s 212 tiles width and 14 tiles height
   WIDTH = 236
   HEIGHT = 236
   TILE_SIZE = 16
@@ -21,6 +23,7 @@ class GameWindow < Gosu::Window
   	self.caption = 'map1'
   	@tileset_image = Gosu::Image.load_tiles('image/mario_world_1_1_tileset.png', TILE_SIZE, TILE_SIZE)
   	@tileset_array = json_quadrillage('mario_tileset.json')
+    @background = Gosu::Image.new('image/background.png', tileable: true)
   end
 
   def button_down(id)
@@ -30,8 +33,10 @@ class GameWindow < Gosu::Window
   def draw
     @row = 0
     @col = 0
+    @background.draw(0, 0, 0)
     @tileset_array.each do |tileset|
-      if @col % 9 == 0
+      # if @col % (WIDTH / TILE_SIZE)== 0
+      if @col % 15 == 0
         @row += 1 
         @col = 0
       end
