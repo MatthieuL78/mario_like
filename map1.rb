@@ -19,7 +19,7 @@ class GameWindow < Gosu::Window
   def initialize
   	super(WIDTH, HEIGHT, false)
   	self.caption = 'map1'
-  	@tileset_image = Gosu::Image.load_tiles('image/mario_tileset.png', TILE_SIZE, TILE_SIZE)
+  	@tileset_image = Gosu::Image.load_tiles('image/mario_world_1_1_tileset.png', TILE_SIZE, TILE_SIZE)
   	@tileset_array = json_quadrillage('mario_tileset.json')
   end
 
@@ -34,11 +34,9 @@ class GameWindow < Gosu::Window
   def draw
     @row = 0
     @tileset_array.each_with_index do |tileset, index|
-      p index
       @row += 1 if index % 9 == 0
   	  @tileset_image[tileset - 1].draw(index * TILE_SIZE, TILE_SIZE * @row, 0, 1, 1)
     end
-    p 'prout'
   end
 end
 

@@ -1,6 +1,5 @@
 {
     "title" : "my_tileset", 
     "url" : "https://github.com",
-    "mon quadrillage" : [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 
-                          1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ]
+    "mon quadrillage" : [ 1, 2, 3, 4, 5, 15, 7, 8, 9, 10, 11, 12, 13, 14]
 }
