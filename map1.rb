@@ -27,15 +27,16 @@ class GameWindow < Gosu::Window
     close if id == Gosu::KbEscape
   end
 
-  # def needs_redraw?
-  #   @redraw
-  # end
-
   def draw
     @row = 0
-    @tileset_array.each_with_index do |tileset, index|
-      @row += 1 if index % 9 == 0
-  	  @tileset_image[tileset - 1].draw(index * TILE_SIZE, TILE_SIZE * @row, 0, 1, 1)
+    @col = 0
+    @tileset_array.each do |tileset|
+      if @col % 9 == 0
+        @row += 1 
+        @col = 0
+      end
+  	  @tileset_image[tileset - 1].draw(@col * TILE_SIZE, TILE_SIZE * @row, 0, 1, 1)
+      @col += 1
     end
   end
 end
