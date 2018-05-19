@@ -1,18 +1,6 @@
-{"frames": {
-"image/mario_tileset.png":
 {
-  "frame": {"x":451,"y":102,"w":57,"h":42},
-  "rotated": false,
-  "trimmed": false,
-  "spriteSourceSize": {"x":0,"y":0,"w":57,"h":42},
-  "sourceSize": {"w":57,"h":42}
-},
-...
-}},
-"meta": {
-	"version": "1.0",
-	"image": "mario_tileset.png",
-	"format": "RGBA8888",
-	"size": {"w":528,"h":448},
-	"scale": "1"
+    "title" : "my_tileset", 
+    "url" : "https://github.com",
+    "mon quadrillage" : [ 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 
+                          1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 ]
 }

@@ -1,40 +1,47 @@
 require 'gosu'
-require 'gosu_texture_packer'
+require 'json'
 
-def media_path(file)
-  File.join(File.dirname(File.dirname(__FILE__)), 'media', file)
-end
+# def media_path(file)
+#   File.join(File.dirname(File.dirname(__FILE__)), 'media', file)
+# end
 
 class GameWindow < Gosu::Window
-  WIDTH = 800
-  HEIGHT = 600
-  TILE_SIZE = 128
+  WIDTH = 236
+  HEIGHT = 236
+  TILE_SIZE = 16
+
+  def json_quadrillage(json_file)
+    @json_file = File.read(json_file)
+    my_hash =JSON.parse(@json_file)
+    my_new_array = my_hash["mon quadrillage"]
+  end
 
   def initialize
   	super(WIDTH, HEIGHT, false)
   	self.caption = 'map1'
-  	@tileset = Gosu::TexturePacker.load_json(self, media_path('mario_tileset.json'))
-  	@redraw = true
+  	@tileset_image = Gosu::Image.load_tiles('image/mario_tileset.png', TILE_SIZE, TILE_SIZE)
+  	@tileset_array = json_quadrillage('mario_tileset.json')
   end
 
   def button_down(id)
     close if id == Gosu::KbEscape
-    @redraw = true if id == Gosu::KbSpace
   end
 
-  def needs_redraw?
-    @redraw
-  end
+  # def needs_redraw?
+  #   @redraw
+  # end
 
   def draw
-  	@draw = false
-  	(0..WIDTH / TILE_SIZE).each do |x|
-  	  (0..HEIGHT / TILE_SIZE).each do |y|
-  	    @tileset.frame(@tileset.frame_list.sample).draw(x * (TILE_SIZE), y * (TILE_SIZE), 0)
-  	  end
-  	end
+    @row = 0
+    @tileset_array.each_with_index do |tileset, index|
+      p index
+      @row += 1 if index % 9 == 0
+  	  @tileset_image[tileset - 1].draw(index * TILE_SIZE, TILE_SIZE * @row, 0, 1, 1)
+    end
+    p 'prout'
   end
 end
 
 window = GameWindow.new
+window.fullscreen = true
 window.show
