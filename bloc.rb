@@ -3,8 +3,8 @@ class Bloc
   def initialize
     @image = Gosu::Image.new('image/bloc.png')
     @bloc_x = @bloc_y = 0
-    @width = 50
-    @height = 10
+    @width = 16
+    @height = 16
   end
 
   def warp(init_x, init_y)

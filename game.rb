@@ -16,7 +16,7 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 200)
+    @player.warp(50, 150)
     @jump_allow = true
     # @bloc = Bloc.new
     # @bloc.warp(100, 100)
