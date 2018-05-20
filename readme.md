@@ -99,3 +99,7 @@ We loop into the tile array to get every element we have to add in the map. The 
 ### Scrolling
 
 ...
+
+## Character
+
+The character's coordinates are in the middle of image.

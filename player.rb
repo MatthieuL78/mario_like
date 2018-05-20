@@ -3,7 +3,7 @@ class Player
   def initialize
     @image = Gosu::Image.new('image/mario.png')
     @player_x = 50
-    @player_y = 152
+    @player_y = 180
     @vel_x = @vel_y = 0.0
     @height = 33
     @width = 22
@@ -30,7 +30,7 @@ class Player
 
   def jump_height_variation
     jump_go_up if @jump_delta > 0
-    jump_go_down if @jump_delta < 0
+    # jump_go_down if @jump_delta < 0
     check_jump
   end
 
@@ -104,11 +104,12 @@ class Player
 
   # Character gravity
   def gravity
-    # 72 150 et 72 183
-    @vel_y += Gosu.offset_y(100, @y_speed + 0.2)
+    p @vel_y
+    @vel_y += Gosu.offset_y(100, @y_speed)
     @player_y += @vel_y
     # p false
   end
+
   # Character coordinates and velocity
   def player_coordinates_check
     @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]

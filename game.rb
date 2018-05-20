@@ -16,11 +16,9 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 82)
+    @player.warp(50, 180)
     @jump_allow = true
-    # @bloc = Bloc.new
-    # @bloc.warp(100, 100)
-    # p @player.player_coordinates_check
+    @gravity = false
   end
 
   def update
@@ -31,7 +29,9 @@ class Game < Gosu::Window
       if @player.player_coordinates_check[0] < WIDTH / 2 - 15
         @bg_x -= @player.player_coordinates_check[2]
       end
+      
     end
+
     # player go right
     if Gosu.button_down? Gosu::KB_RIGHT
       @player.accelerate_right
@@ -39,26 +39,45 @@ class Game < Gosu::Window
       if @player.player_coordinates_check[0] > WIDTH / 2 + 15
         @bg_x -= @player.player_coordinates_check[2]
       end
+      @map.block_array.each do |bloc|
+        if bloc.collision(@player.player_coordinates_check, @bg_x) == true
+          @gravity = true
+          break
+        end
+        @gravity = false
+      end
     end
+
     # player jump
     if Gosu.button_down? Gosu::KB_SPACE
       if @jump_allow == true
         @jump_allow = false
         @player.jump_initialization
       end
-    end
-    @map.block_array.each do |bloc|
-      # p bloc
-      if bloc.collision(@player.player_coordinates_check, @bg_x) == true
-        @player.gravity 
-      else
-        # p false
-        false
+      @map.block_array.each do |bloc|
+        if bloc.collision(@player.player_coordinates_check, @bg_x) == true
+          @gravity = true
+          break
+        end
+        @gravity = false
       end
     end
+
+    @map.block_array.each do |bloc|
+      if bloc.collision(@player.player_coordinates_check, @bg_x) == true
+        @gravity = true
+        break
+      end
+      @gravity = false
+    end
+
+    if @gravity == false
+      @player.gravity
+    end
+    
     @jump_allow = @player.jump_allow_check
     #unless @bloc.collision(@player.player_coordinates_check) == true
-      @player.move(WIDTH, @bg_x)
+    @player.move(WIDTH, @bg_x)
     #end
   end
 
