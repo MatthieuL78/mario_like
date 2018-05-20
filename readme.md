@@ -1,7 +1,8 @@
 # Mario like
 Try to make a mario like game in Ruby. I am using the following gems :
-* Gosu : For making the game
-* byebug : For debugging
+* Gosu : To make the game
+* byebug : Debugging
+* rubocop : Correction
 
 ## To-do list
 * Collision of the character
@@ -80,3 +81,7 @@ Here it's the method to get the information from other part of the codes about i
 
 The methode I used is very different, but it's a good example to understand how to do the background scrolling.
 
+## class Map
+### Overview
+
+This class manages the background and the tilesets. We parse a JSON file to get the tileset. The mapping for tileset use a matrix to add each elements where it has to be.

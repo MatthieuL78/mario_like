@@ -18,8 +18,8 @@ class Game < Gosu::Window
     @player = Player.new
     @player.warp(50, 200)
     @jump_allow = true
-    @bloc = Bloc.new
-    @bloc.warp(100, 100)
+    # @bloc = Bloc.new
+    # @bloc.warp(100, 100)
   end
 
   def update
@@ -48,20 +48,20 @@ class Game < Gosu::Window
     end
     #@bloc.collision(@player,@bloc)
     @jump_allow = @player.jump_allow_check
-    unless @bloc.collision(@player.player_coordinates_check) == true
+    #unless @bloc.collision(@player.player_coordinates_check) == true
       @player.move(WIDTH, @bg_x)
-    end
+    #end
   end
 
   def draw
     @player.draw
-    @bloc.draw
+    # @bloc.draw
     return false unless @bg_x < 100 && @bg_x - 256 > @map.background_width * -1
     # we block the extremities of the background
     @bg_x = 0 if @bg_x > 0
     @bg_x = -1595 if @bg_x < -1595
     #@map.draw(@bg_x, 0, 0)
-    @map.draw(WIDTH, @bg_x)
+    @map.draw(@bg_x)
   end
 
   def button_down(id)
