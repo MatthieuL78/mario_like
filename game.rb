@@ -16,10 +16,11 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 150)
+    @player.warp(50, 82)
     @jump_allow = true
     # @bloc = Bloc.new
     # @bloc.warp(100, 100)
+    # p @player.player_coordinates_check
   end
 
   def update
@@ -47,7 +48,13 @@ class Game < Gosu::Window
       end
     end
     @map.block_array.each do |bloc|
-      bloc.collision(@player.player_coordinates_check)
+      # p bloc
+      if bloc.collision(@player.player_coordinates_check, @bg_x) == true
+        @player.gravity 
+      else
+        # p false
+        false
+      end
     end
     @jump_allow = @player.jump_allow_check
     #unless @bloc.collision(@player.player_coordinates_check) == true

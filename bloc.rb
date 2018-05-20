@@ -8,10 +8,15 @@ class Bloc
     @height = 16
   end
 
-  def collision(player)
-    if (player[0] < @bloc_x + @width && player[0] + player[4] > @bloc_x && player[1] < @bloc_y + @height && player[1] + player[5] > @bloc_y)
-      return p true
+  def collision(player, background_x)    
+    if (player[0] - player[4] /2 < @bloc_x + @width + background_x && player[0] + player[4] / 2 > @bloc_x + background_x && player[1] - player[5] / 2 < @bloc_y + @height && player[1] + player[5] / 2 > @bloc_y)
+      return true
     end
     # return p false
   end
+
+  def bloc_coordinates_check
+    @coordinates_array = [@bloc_x, @bloc_y, @width, @height]
+  end
+
 end
