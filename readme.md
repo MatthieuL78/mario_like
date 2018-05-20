@@ -85,3 +85,17 @@ The methode I used is very different, but it's a good example to understand how 
 ### Overview
 
 This class manages the background and the tilesets. We parse a JSON file to get the tileset. The mapping for tileset use a matrix to add each elements where it has to be.
+
+### Initialize
+
+* We get the tile image 
+* We get the tile matrix from the JSON, we get the data in a array
+* We get the background image, there is no collision between the element of the background and the character
+
+### draw
+
+We loop into the tile array to get every element we have to add in the map. The loop write every column of a row, when it's done it switchs into the next row.
+
+### Scrolling
+
+...
