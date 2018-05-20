@@ -46,7 +46,9 @@ class Game < Gosu::Window
         @player.jump_initialization
       end
     end
-    #@bloc.collision(@player,@bloc)
+    @map.block_array.each do |bloc|
+      bloc.collision(@player.player_coordinates_check)
+    end
     @jump_allow = @player.jump_allow_check
     #unless @bloc.collision(@player.player_coordinates_check) == true
       @player.move(WIDTH, @bg_x)
@@ -55,12 +57,11 @@ class Game < Gosu::Window
 
   def draw
     @player.draw
-    # @bloc.draw
     return false unless @bg_x < 100 && @bg_x - 256 > @map.background_width * -1
     # we block the extremities of the background
     @bg_x = 0 if @bg_x > 0
     @bg_x = -1595 if @bg_x < -1595
-    #@map.draw(@bg_x, 0, 0)
+    # We drow the background and tiles
     @map.draw(@bg_x)
   end
 
