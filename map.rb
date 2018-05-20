@@ -3,6 +3,8 @@ require 'json'
 
 # Background and tileset class
 class Map
+  # Our map is : 3392 width and 224 height
+  # It s 212 tiles width and 14 tiles height
   TILE_SIZE = 16
   def initialize
     @tile_image = Gosu::Image.load_tiles('image/mario_world_1_1_tileset.png', TILE_SIZE, TILE_SIZE)
@@ -12,8 +14,8 @@ class Map
 
   def json_quadrillage(json_file)
     @json_file = File.read(json_file)
-    my_tile_hash =JSON.parse(@json_file)
-    my_tile_array = my_tile_hash["mon quadrillage"]
+    my_tile_hash = JSON.parse(@json_file)
+    my_tile_hash['mon quadrillage']
   end
 
   def draw(width, background_x)
@@ -21,9 +23,9 @@ class Map
     @col = 0
     @background.draw(background_x, 0, 0)
     @tile_array.each do |tileset|
-      # if @col % (width / TILE_SIZE)== 0
-      if @col % 15 == 0
-        @row += 1 
+      # if (@col % (width / TILE_SIZE)).zero?
+      if (@col % 15).zero?
+        @row += 1
         @col = 0
       end
       @tile_image[tileset - 1].draw(@col * TILE_SIZE, TILE_SIZE * @row, 0, 1, 1)
