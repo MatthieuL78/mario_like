@@ -17,44 +17,27 @@ class Bloc
     end
   end
 
-  def collision_side(player, background_x)    
-    #if (player[0] - player[4] /2 < @bloc_x + @width + background_x && player[0] + player[4] / 2 > @bloc_x + background_x)
-    # p @bloc_y + @height + 5 #< player[1] - player[5] /2
-    # p player[1] - player[5] #< @bloc_y - 5
-    # p " OK"
-    # p  @bloc_y + @height - 5
-    # p player[1] + player[5] / 2 
-    # p 'POUR X'
-    # p @bloc_x + background_x - 1 
-    # p player[0] + player[4] /2
-    # p @bloc_y - @height - 10
-    # p player[1] - player[5] /2
-    # p @bloc_y - 1
-    # p @bloc_y - @height - 10 < player[1] - player[5] /2
-    # p player[1] - player[5] < @bloc_y - 1
-    # p "1"
-    # p player[1] - player[5] / 2 < @bloc_y + @height - 1
-    # p @bloc_y + @height + 1 < player[1] + player[5] / 2
-    # p "2"
-    # p @bloc_x + background_x - 1
-    # p player[0] + player[4] /2
-    # p @bloc_x + background_x - 1 < player[0] + player[4] /2
-    # p "X"
-
+  def collision_right(player, background_x)    
       if (@bloc_y - @height - 10 < player[1] - player[5] / 2) && (player[1] - player[5] / 2 < @bloc_y + 10)
-        if (@bloc_x + background_x - 1 < player[0] + player[4] /2 && @bloc_x + @width + background_x > player[0] - player[4] / 2)
+        if (@bloc_x + background_x - 3 < player[0] + player[4] /2 && @bloc_x + @width / 3 + background_x > player[0] - player[4] / 2)
           p 'shit 1'
           return true
         end
       elsif (player[1] - player[5] / 2 < @bloc_y + @height - 1) && (@bloc_y + @height + 1 < player[1] + player[5] / 2)
-        if (@bloc_x + background_x - 1 < player[0] + player[4] /2 && @bloc_x + @width + background_x > player[0] - player[4] / 2)
-          p 'shit 2'
-          p  @bloc_y + @height - 5
-          p player[1] + player[5] / 2 
-          p 'POUR X'
-          p @bloc_x + background_x - 1 
-          p player[0] + player[4] /2
-          byebird
+        if (@bloc_x + background_x - 3 < player[0] + player[4] /2 && @bloc_x + @width / 3 + background_x > player[0] - player[4] / 2)
+          return true
+        end
+      end
+      return false
+  end
+
+   def collision_left(player, background_x)    
+      if (@bloc_y - @height - 10 < player[1] - player[5] / 2) && (player[1] - player[5] / 2 < @bloc_y + 10)
+        if (@bloc_x + @width * 2 / 3 + background_x - 10 < player[0] + player[4] /2 && @bloc_x + @width + background_x > player[0] - player[4] / 2)
+          return true
+        end
+      elsif (player[1] - player[5] / 2 < @bloc_y + @height - 1) && (@bloc_y + @height + 1 < player[1] + player[5] / 2)
+        if (@bloc_x + @width * 2 / 3 + background_x - 10 < player[0] + player[4] /2 && @bloc_x + @width + background_x > player[0] - player[4] / 2)
           return true
         end
       end

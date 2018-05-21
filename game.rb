@@ -30,7 +30,7 @@ class Game < Gosu::Window
       if Gosu.button_down? Gosu::KB_LEFT
         @move_right = true
         @map.block_array.each do |bloc|
-          if bloc.collision_side(@player.predictive_coordinates_check, @bg_x) == false
+          if bloc.collision_left(@player.predictive_coordinates_check, @bg_x) == false
             @move_left = true
           else
             @move_left = false 
@@ -52,7 +52,7 @@ class Game < Gosu::Window
       if Gosu.button_down? Gosu::KB_RIGHT
         @move_left = true
         @map.block_array.each do |bloc|
-          if bloc.collision_side(@player.predictive_coordinates_check, @bg_x) == false
+          if bloc.collision_right(@player.predictive_coordinates_check, @bg_x) == false
             @move_right = true
           else
             @move_right = false 
@@ -102,8 +102,6 @@ class Game < Gosu::Window
     p "left = #{@move_left}"
     p "right = #{@move_right}"
 
-    p ' IL FAUT FAIRE DES COLLISIONS POUR LA DROITE ET LA GAUCHE SEPAREMENT'
-    
     @player.move(WIDTH, @bg_x, @move_right, @move_left)
     # elsif @move_left == true and Gosu.button_down? Gosu::KB_LEFT 
     #   @player.move(WIDTH, @bg_x)
