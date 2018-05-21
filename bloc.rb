@@ -8,8 +8,8 @@ class Bloc
     @width = 16
     @height = 16
     @bloc_array = [@bloc_x, @bloc_y, @width, @height]
-    @predictive_array = [0, 0, 0, 0]
-    @player_array = [0, 0, 0, 0]
+    @predictive_bloc = [0, 0, 0, 0]
+    @player = [0, 0, 0, 0]
   end
 
   # NOT DONE
@@ -60,14 +60,9 @@ class Bloc
   def collision_right(player, background_x)
     player_sides(player, 'RIGHT')
     bloc_sides(background_x, 'RIGHT')
-    if (@predictive_array[0] < @player_array[0]) && (@player_array[0] < @predictive_array[2])
-      if (@predictive_array[3] < @player_array[1] && @predictive_array[1] > @player_array[3])
-        return true
-      end
-    elsif (@player_array[0] < @predictive_array[0]) && (@predictive_array[0] < @player_array[2])
-      if (@predictive_array[3] < @player_array[1] && @predictive_array[1] > @player_array[3])
-        return true
-      end
+    if @predictive_bloc[3] < @player[1] && @predictive_bloc[1] > @player[3]
+      return true if @predictive_bloc[0] < @player[0] && @player[0] < @predictive_bloc[2]
+      return true if @player[0] < @predictive_bloc[0] && @predictive_bloc[0] < @player[2]
     end
     false
   end
@@ -76,14 +71,9 @@ class Bloc
     # NEED TO CHECK WHY @width / 1.4 ?!
     player_sides(player, 'LEFT')
     bloc_sides(background_x, 'LEFT')
-    if (@predictive_array[0] < @player_array[0]) && (@player_array[0] < @predictive_array[2])
-      if (@predictive_array[1] < @player_array[1] && @predictive_array[1] > @player_array[3])
-        return true
-      end
-    elsif (@player_array[0] < @predictive_array[0]) && (@predictive_array[0] < @player_array[0])
-      if (@predictive_array[1] < @player_array[1] && @predictive_array[1] > @player_array[3])
-        return true
-      end
+    if @predictive_bloc[1] < @player[1] && @predictive_bloc[1] > @player[3]
+      return true if @predictive_bloc[0] < @player[0] && @player[0] < @predictive_bloc[2]   
+      return true if @player[0] < @predictive_bloc[0] && @predictive_bloc[0] < @player[0]    
     end
     false
   end
@@ -92,28 +82,28 @@ class Bloc
     # Top - Right - Bottom - Left
     # If we go LEFT, the predictive is on the left (negative)
     if direction == 'LEFT'
-      @player_array[3] = player[2] - player[4] / 2
+      @player[3] = player[2] - player[4] / 2
     # If we go RIGHT, the predictive is on the right (positive)
     elsif direction == 'RIGHT'
-      @player_array[1] = player[0] + player[4] / 2
-      @player_array[3] = player[0] - player[4] / 2
+      @player[1] = player[0] + player[4] / 2
+      @player[3] = player[0] - player[4] / 2
     end
-    @player_array[0] = player[1] - player[5] / 2
-    @player_array[1] = player[0] + player[4] / 2
-    @player_array[2] = player[1] + player[5] / 2
+    @player[0] = player[1] - player[5] / 2
+    @player[1] = player[0] + player[4] / 2
+    @player[2] = player[1] + player[5] / 2
   end
 
   def bloc_sides(background_x, direction)
   # Top - Right - Bottom - Left
     if direction == 'LEFT'
-      @predictive_array[1] = @bloc_array[0] + @bloc_array[2] / 1.4 + background_x
-      @predictive_array[0] = @bloc_array[1] - @bloc_array[3] - 10
+      @predictive_bloc[1] = @bloc_array[0] + @bloc_array[2] / 1.4 + background_x
+      @predictive_bloc[0] = @bloc_array[1] - @bloc_array[3] - 10
     elsif direction == 'RIGHT'
-      @predictive_array[1] = @bloc_array[0] + @bloc_array[2] / 3 + background_x
-      @predictive_array[0] = @bloc_array[1] + @bloc_array[3] - 10
+      @predictive_bloc[1] = @bloc_array[0] + @bloc_array[2] / 3 + background_x
+      @predictive_bloc[0] = @bloc_array[1] + @bloc_array[3] - 10
     end
-    @predictive_array[2] = @bloc_array[1] + 10
-    @predictive_array[3] = @bloc_array[0] + background_x
+    @predictive_bloc[2] = @bloc_array[1] + 10
+    @predictive_bloc[3] = @bloc_array[0] + background_x
   end
 
 end
