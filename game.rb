@@ -26,26 +26,26 @@ class Game < Gosu::Window
 
   def update
     # player go left
-    # unless @move_left == false
-    #   if Gosu.button_down? Gosu::KB_LEFT
-    #     @move_right = true
-    #     @map.block_array.each do |bloc|
-    #       if bloc.collision_side(@player.predictive_coordinates_check, @bg_x) == false
-    #         @move_left = true
-    #       else
-    #         @move_left = false 
-    #         break
-    #       end 
-    #     end
-    #     if @move_left == true
-    #       @player.accelerate_left
-    #       # movement depending of the background
-    #       if @player.player_coordinates_check[0] < WIDTH / 2 - 15
-    #         @bg_x -= @player.player_coordinates_check[2]
-    #       end
-    #     end
-    #   end
-    # end
+    unless @move_left == false
+      if Gosu.button_down? Gosu::KB_LEFT
+        @move_right = true
+        @map.block_array.each do |bloc|
+          if bloc.collision_side(@player.predictive_coordinates_check, @bg_x) == false
+            @move_left = true
+          else
+            @move_left = false 
+            break
+          end 
+        end
+        if @move_left == true
+          @player.accelerate_left
+          # movement depending of the background
+          if @player.player_coordinates_check[0] < WIDTH / 2 - 15
+            @bg_x -= @player.player_coordinates_check[2]
+          end
+        end
+      end
+    end
 
     # player go right
     unless @move_right == false
@@ -99,13 +99,17 @@ class Game < Gosu::Window
     # Check if jump is allowed
     @jump_allow = @player.jump_allow_check
     
-    if @move_right == true and Gosu.button_down? Gosu::KB_RIGHT
-      @player.move(WIDTH, @bg_x)
-    elsif @move_left == true and Gosu.button_down? Gosu::KB_LEFT 
-      @player.move(WIDTH, @bg_x)
-    elsif Gosu.button_down? Gosu::KB_SPACE
-      @player.move(WIDTH, @bg_x)
-    end 
+    p "left = #{@move_left}"
+    p "right = #{@move_right}"
+
+    p ' IL FAUT FAIRE DES COLLISIONS POUR LA DROITE ET LA GAUCHE SEPAREMENT'
+    
+    @player.move(WIDTH, @bg_x, @move_right, @move_left)
+    # elsif @move_left == true and Gosu.button_down? Gosu::KB_LEFT 
+    #   @player.move(WIDTH, @bg_x)
+    # elsif Gosu.button_down? Gosu::KB_SPACE
+    #   @player.move(WIDTH, @bg_x)
+    #end 
   end
 
   def draw

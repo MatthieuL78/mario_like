@@ -27,19 +27,19 @@ class Bloc
     # p 'POUR X'
     # p @bloc_x + background_x - 1 
     # p player[0] + player[4] /2
-    p @bloc_y - @height - 10
-    p player[1] - player[5] /2
-    p @bloc_y - 1
-    p @bloc_y - @height - 10 < player[1] - player[5] /2
-    p player[1] - player[5] < @bloc_y - 1
-    p "1"
-    p player[1] - player[5] / 2 < @bloc_y + @height - 1
-    p @bloc_y + @height + 1 < player[1] + player[5] / 2
-    p "2"
-    p @bloc_x + background_x - 1
-    p player[0] + player[4] /2
-    p @bloc_x + background_x - 1 < player[0] + player[4] /2
-    p "X"
+    # p @bloc_y - @height - 10
+    # p player[1] - player[5] /2
+    # p @bloc_y - 1
+    # p @bloc_y - @height - 10 < player[1] - player[5] /2
+    # p player[1] - player[5] < @bloc_y - 1
+    # p "1"
+    # p player[1] - player[5] / 2 < @bloc_y + @height - 1
+    # p @bloc_y + @height + 1 < player[1] + player[5] / 2
+    # p "2"
+    # p @bloc_x + background_x - 1
+    # p player[0] + player[4] /2
+    # p @bloc_x + background_x - 1 < player[0] + player[4] /2
+    # p "X"
 
       if (@bloc_y - @height - 10 < player[1] - player[5] / 2) && (player[1] - player[5] / 2 < @bloc_y + 10)
         if (@bloc_x + background_x - 1 < player[0] + player[4] /2 && @bloc_x + @width + background_x > player[0] - player[4] / 2)

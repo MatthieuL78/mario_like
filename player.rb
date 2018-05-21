@@ -91,26 +91,32 @@ class Player
   end
 
   # Caracter movement
-  def move(sc_wdth, bg_x)
+  def move(sc_wdth, bg_x, move_right, move_left)
     # movement depending of the player_x
-    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT) or bg_x >= 0
+    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
+      p "prout 1"
       @player_x += @vel_x if @player_x > 2
+    else
+      p 'NOPE 1'
     end
     # movement depending of the player_x
-    if (@player_x < sc_wdth / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT) or bg_x <= -1595
+    if (@player_x < sc_wdth / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
+      p "prout"
       @player_x += @vel_x if @player_x < 234
+    else
+      p 'NOPE'
     end
     # Block the ice effect
     @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
-    @player_x %= sc_wdth
+    # @player_x %= sc_wdth
     @vel_x *= 0.95
     jump_height_variation
   end
 
   # Character gravity
   def gravity
-    # @vel_y += Gosu.offset_y(100, @y_speed)
-    # @player_y += @vel_y * 100
+    @vel_y += Gosu.offset_y(100, @y_speed)
+    @player_y += @vel_y * 100
   end
 
   # Character coordinates and velocity
