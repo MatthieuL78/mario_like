@@ -31,9 +31,9 @@ class Player
     @down_y = @jump_height_max * -1
   end
 
-  def jump_height_variation
+  def jump_height_variation(bloc_array, gravity, bg_x)
     jump_go_up if @jump_delta > 0
-    jump_go_down if @jump_delta < 0
+    jump_go_down(bloc_array, gravity, bg_x) if @jump_delta < 0
     check_jump
   end
 
@@ -47,12 +47,24 @@ class Player
     @jump_delta -= 1
   end
 
-  def jump_go_down
+  def jump_go_down(bloc_array, gravity, bg_x)
     p " DOWN = #{@jump_delta}"
     (@jump_delta * -1).times do
       # gravity
-      @vel_y += Gosu.offset_y(100, @y_speed)
-      @player_y += @vel_y
+      bloc_array.each do |bloc|
+        if bloc.collision_bottom(@coordinates_predictives, bg_x) == true
+          # p @player.predictive_coordinates_check
+          # p bloc.bloc_coordinates_check
+          gravity = false
+          @vel_y  = 0
+          # byebug
+          break
+        end
+      end
+      unless gravity == false
+        @vel_y += Gosu.offset_y(100, @y_speed)
+        @player_y += @vel_y
+      end
     end
     p " DOWN = #{@vel_y}"
     @jump_delta += 1
@@ -94,7 +106,7 @@ class Player
   end
 
   # Caracter movement
-  def move(sc_wdth, bg_x, move_right, move_left)
+  def move(sc_wdth, bg_x, move_right, move_left, bloc_array, gravity)
     # movement depending of the player_x
     if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
       @player_x += @vel_x if @player_x > 2
@@ -108,10 +120,12 @@ class Player
       false
     end
     # Block the ice effect
-    @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+    # @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
     # @player_x %= sc_wdth
     @vel_x *= 0.95
-    jump_height_variation
+    # If jump_delta is equal 0 it's not do
+    jump_height_variation(bloc_array, gravity, bg_x) unless @jump_delta == 0
+
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
