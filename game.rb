@@ -32,9 +32,9 @@ class Game < Gosu::Window
           if bloc.collision_left(@player.coordinates_predictives, @bg_x) == false
             @move_left = true
           else
-            @move_left = false 
+            @move_left = false
             break
-          end 
+          end
         end
         if @move_left == true
           @player.accelerate_left
@@ -54,9 +54,9 @@ class Game < Gosu::Window
           if bloc.collision_right(@player.coordinates_predictives, @bg_x) == false
             @move_right = true
           else
-            @move_right = false 
+            @move_right = false
             break
-          end 
+          end
         end
         if @move_right == true
           @player.accelerate_right
@@ -76,7 +76,7 @@ class Game < Gosu::Window
         @player.jump_initialization
       end
     end
-    
+
     # Check the gravity
     unless @jump_allow == false
       @map.block_array.each do |bloc|
@@ -90,16 +90,13 @@ class Game < Gosu::Window
         end
         @gravity = true
       end
-      if @gravity == true  
+      if @gravity == true
         @player.gravity
       end
       # Check if jump is allowed
     end
-    
-
       @jump_allow = @player.jump_allow_check
       @player.move(WIDTH, @bg_x, @move_right, @move_left, @map.block_array, @gravity)
-    
   end
 
   def draw

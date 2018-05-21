@@ -5,7 +5,8 @@ Try to make a mario like game in Ruby. I am using the following gems :
 * rubocop : Correction
 
 ## To-do list
-* Collision of the character
+* Check ice effect
+* top bottom collision
 
 ## My help
 I used the following links to create this game :

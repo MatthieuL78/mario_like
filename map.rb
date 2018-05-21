@@ -3,6 +3,7 @@ require 'json'
 
 # Background and tileset class
 class Map
+  attr_accessor :background, :block_array
   # Our map is : 3392 width and 224 height
   # It s 212 tiles width and 14 tiles height
   TILE_SIZE = 16
@@ -50,9 +51,5 @@ class Map
 
   def background_width
     @background.width
-  end
-
-  def block_array
-    @block_array
   end
 end

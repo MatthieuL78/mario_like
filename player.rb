@@ -43,10 +43,10 @@ class Player
     @jump_delta.times do
       # stop by block
       bloc_array.each do |bloc|
-        unless bloc.coordinates_array[1] + bloc.coordinates_array[3] > @player_y
+        unless bloc.bloc_array[1] + bloc.bloc_array[3] > @player_y
           if bloc.collision_top(@coordinates_predictives, bg_x) == true
             @jump_top = false
-            @vel_y  = 0
+            @vel_y = 0
             break
           end
         end
@@ -67,7 +67,7 @@ class Player
       bloc_array.each do |bloc|
         if bloc.collision_bottom(@coordinates_predictives, bg_x) == true
           gravity = false
-          @vel_y  = 0
+          @vel_y = 0
           break
         end
       end
@@ -118,23 +118,23 @@ class Player
   # Caracter movement
   def move(sc_wdth, bg_x, move_right, move_left, bloc_array, gravity)
     # movement depending of the player_x
-    if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
+    if (@player_x > sc_wdth * 1 / 3 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
       @player_x += @vel_x if @player_x > 2
     else
       false
     end
     # movement depending of the player_x
-    if (@player_x < sc_wdth / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
+    if (@player_x < sc_wdth * 1 / 3 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
       @player_x += @vel_x if @player_x < 234
     else
       false
     end
     # Block the ice effect
-    # @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+    # @vel_x = 0 if Gosu.button_down? Gosu::KB_RIGHT and Gosu.button_down? Gosu::KB_LEFT
     # @player_x %= sc_wdth
     @vel_x *= 0.95
     # If jump_delta is equal 0 it's not do
-    jump_height_variation(bloc_array, gravity, bg_x) unless @jump_delta == 0
+    jump_height_variation(bloc_array, gravity, bg_x) unless @jump_delta.zero?
 
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
