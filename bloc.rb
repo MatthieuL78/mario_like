@@ -61,10 +61,12 @@ class Bloc
 
     if (@bloc_y - @height - 10 < @player_array[0]) && (@player_array[0] < @bloc_y + 10)
       if (@bloc_x + background_x < @player_array[1] && @bloc_x + @width / 3 + background_x > @player_array[3])
+        p 'colision 1'
         return true
       end
     elsif (@player_array[0] < @bloc_y + @height - 1) && (@bloc_y + @height + 1 < @player_array[2])
       if (@bloc_x + background_x < @player_array[1] && @bloc_x + @width / 3 + background_x > @player_array[3])
+        p 'colision 2'
         return true
       end
     end

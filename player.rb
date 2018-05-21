@@ -118,13 +118,15 @@ class Player
   # Caracter movement
   def move(sc_wdth, bg_x, move_right, move_left, bloc_array, gravity)
     # movement depending of the player_x
-    if (@player_x > sc_wdth * 1 / 3 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
+    # NEED TO CHECK THE OFFSET OF 15, this value is needed
+    if (@player_x > sc_wdth * 1 / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
       @player_x += @vel_x if @player_x > 2
     else
       false
     end
     # movement depending of the player_x
-    if (@player_x < sc_wdth * 1 / 3 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
+    # NEED TO CHECK THE OFFSET OF 15, this value is needed
+    if (@player_x < sc_wdth * 1 / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
       @player_x += @vel_x if @player_x < 234
     else
       false

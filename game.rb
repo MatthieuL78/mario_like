@@ -95,6 +95,7 @@ class Game < Gosu::Window
       end
       # Check if jump is allowed
     end
+
       @jump_allow = @player.jump_allow_check
       @player.move(WIDTH, @bg_x, @move_right, @move_left, @map.block_array, @gravity)
   end
