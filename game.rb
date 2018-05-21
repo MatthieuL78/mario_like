@@ -30,7 +30,7 @@ class Game < Gosu::Window
       if Gosu.button_down? Gosu::KB_LEFT
         @move_right = true
         @map.block_array.each do |bloc|
-          if bloc.collision_left(@player.predictive_coordinates_check, @bg_x) == false
+          if bloc.collision_left(@player.coordinates_predictives, @bg_x) == false
             @move_left = true
           else
             @move_left = false 
@@ -40,8 +40,8 @@ class Game < Gosu::Window
         if @move_left == true
           @player.accelerate_left
           # movement depending of the background
-          if @player.player_coordinates_check[0] < WIDTH / 2 - 15
-            @bg_x -= @player.player_coordinates_check[2]
+          if @player.coordinates[0] < WIDTH / 2 - 15
+            @bg_x -= @player.coordinates[2]
           end
         end
       end
@@ -52,7 +52,8 @@ class Game < Gosu::Window
       if Gosu.button_down? Gosu::KB_RIGHT
         @move_left = true
         @map.block_array.each do |bloc|
-          if bloc.collision_right(@player.predictive_coordinates_check, @bg_x) == false
+          p bloc.coordinates_array
+          if bloc.collision_right(@player.coordinates_predictives, @bg_x) == false
             @move_right = true
           else
             @move_right = false 
@@ -62,8 +63,8 @@ class Game < Gosu::Window
         if @move_right == true
           @player.accelerate_right
           # movement depending of the background
-          if @player.player_coordinates_check[0] > WIDTH / 2 + 15
-            @bg_x -= @player.player_coordinates_check[2]
+          if @player.coordinates[0] > WIDTH / 2 + 15
+            @bg_x -= @player.coordinates[2]
           end
         end
       end
@@ -81,11 +82,11 @@ class Game < Gosu::Window
     # Check the gravity
     unless @jump_allow == false
       @map.block_array.each do |bloc|
-        if bloc.collision(@player.predictive_coordinates_check, @bg_x) == true
+        if bloc.collision(@player.coordinates_predictives, @bg_x) == true
           # p @player.predictive_coordinates_check
           # p bloc.bloc_coordinates_check
           @gravity = true
-          @player.player_coordinates_check[3] = 0
+          @player.coordinates[3] = 0
           break
         end
         @gravity = false
@@ -98,16 +99,7 @@ class Game < Gosu::Window
     
     # Check if jump is allowed
     @jump_allow = @player.jump_allow_check
-    
-    p "left = #{@move_left}"
-    p "right = #{@move_right}"
-
     @player.move(WIDTH, @bg_x, @move_right, @move_left)
-    # elsif @move_left == true and Gosu.button_down? Gosu::KB_LEFT 
-    #   @player.move(WIDTH, @bg_x)
-    # elsif Gosu.button_down? Gosu::KB_SPACE
-    #   @player.move(WIDTH, @bg_x)
-    #end 
   end
 
   def draw

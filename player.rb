@@ -1,5 +1,6 @@
 # Player class
 class Player
+  attr_accessor :coordinates, :coordinates_predictives
   def initialize
     @image = Gosu::Image.new('image/mario.png')
     @player_x = 50
@@ -12,6 +13,8 @@ class Player
     @jump_delta = 0
     @jump_allow = true
     @jump_height_max = 30
+    @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+    @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
 
   # Teleport the caracter
@@ -94,17 +97,15 @@ class Player
   def move(sc_wdth, bg_x, move_right, move_left)
     # movement depending of the player_x
     if (@player_x > sc_wdth / 2 - 15 and Gosu.button_down? Gosu::KB_LEFT and move_left == true) or bg_x >= 0
-      p "prout 1"
       @player_x += @vel_x if @player_x > 2
     else
-      p 'NOPE 1'
+      false
     end
     # movement depending of the player_x
     if (@player_x < sc_wdth / 2 + 15 and Gosu.button_down? Gosu::KB_RIGHT and move_right == true) or bg_x <= -1595
-      p "prout"
       @player_x += @vel_x if @player_x < 234
     else
-      p 'NOPE'
+      false
     end
     # Block the ice effect
     @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
@@ -119,15 +120,15 @@ class Player
     @player_y += @vel_y * 100
   end
 
-  # Character coordinates and velocity
-  def player_coordinates_check
-    @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
-  end
+  # # Character coordinates and velocity
+  # def player_coordinates_check
+  #   @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+  # end
 
-  # Character predictive coordinates
-  def predictive_coordinates_check
-    @coordinates_array = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
-  end
+  # # Character predictive coordinates
+  # def predictive_coordinates_check
+  #   @coordinates_array = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
+  # end
 
   # Draw character
   def draw

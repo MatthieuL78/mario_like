@@ -1,11 +1,13 @@
 # Bloc class
 class Bloc
+  attr_accessor :coordinates_array
   def initialize(bloc_x, bloc_y)
     @image = Gosu::Image.new('image/bloc.png')
     @bloc_x = bloc_x
     @bloc_y = bloc_y
     @width = 16
     @height = 16
+    @coordinates_array = [@bloc_x, @bloc_y, @width, @height]
   end
 
   def collision(player, background_x)    
@@ -42,9 +44,5 @@ class Bloc
         end
       end
       return false
-  end
-
-  def bloc_coordinates_check
-    @coordinates_array = [@bloc_x, @bloc_y, @width, @height]
   end
 end
