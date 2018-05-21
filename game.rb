@@ -118,5 +118,5 @@ class Game < Gosu::Window
 end
 
 my_game = Game.new
-my_game.fullscreen = true
+# my_game.fullscreen = true
 my_game.show
