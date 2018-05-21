@@ -58,15 +58,12 @@ class Bloc
 
   def collision_right(player, background_x)
     player_sides(player, 'RIGHT')
-
     if (@bloc_y - @height - 10 < @player_array[0]) && (@player_array[0] < @bloc_y + 10)
       if (@bloc_x + background_x < @player_array[1] && @bloc_x + @width / 3 + background_x > @player_array[3])
-        p 'colision 1'
         return true
       end
     elsif (@player_array[0] < @bloc_y + @height - 1) && (@bloc_y + @height + 1 < @player_array[2])
       if (@bloc_x + background_x < @player_array[1] && @bloc_x + @width / 3 + background_x > @player_array[3])
-        p 'colision 2'
         return true
       end
     end
@@ -74,13 +71,18 @@ class Bloc
   end
 
   def collision_left(player, background_x)
+    # NEED TO CHECK WHY @width / 1.4 ?!
     player_sides(player, 'LEFT')
     if (@bloc_y - @height - 10 < @player_array[0]) && (@player_array[0] < @bloc_y + 10)
-      if (@bloc_x + @width + background_x < @player_array[1] && @bloc_x + @width + background_x > @player_array[3])
+      if (@bloc_x + @width / 1.4 + background_x < @player_array[1] && @bloc_x + @width / 1.4 + background_x > @player_array[3])
+         p @player_array
+         p @bloc_x + @width /2 + background_x
         return true
       end
     elsif (@player_array[0] < @bloc_y + @height - 1) && (@bloc_y + @height + 1 < @player_array[0])
-      if (@bloc_x + @width + background_x < @player_array[1] && @bloc_x + @width + background_x > @player_array[3])
+      if (@bloc_x + @width / 1.4 + background_x < @player_array[1] && @bloc_x + @width / 1.4 + background_x > @player_array[3])
+        p @player_array
+        p @bloc_x + @width /2 + background_x
         return true
       end
     end

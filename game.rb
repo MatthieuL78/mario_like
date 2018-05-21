@@ -28,6 +28,7 @@ class Game < Gosu::Window
     unless @move_left == false
       if Gosu.button_down? Gosu::KB_LEFT
         @move_right = true
+        # We check if there is a collision
         @map.block_array.each do |bloc|
           if bloc.collision_left(@player.coordinates_predictives, @bg_x) == false
             @move_left = true
@@ -50,6 +51,7 @@ class Game < Gosu::Window
     unless @move_right == false
       if Gosu.button_down? Gosu::KB_RIGHT
         @move_left = true
+        # We check if there is a collision
         @map.block_array.each do |bloc|
           if bloc.collision_right(@player.coordinates_predictives, @bg_x) == false
             @move_right = true
