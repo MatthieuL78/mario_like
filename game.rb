@@ -16,7 +16,7 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 180)
+    @player.warp(50, 150)
     @jump_allow = true
     @gravity = false
     @collision_side = false
@@ -52,7 +52,6 @@ class Game < Gosu::Window
       if Gosu.button_down? Gosu::KB_RIGHT
         @move_left = true
         @map.block_array.each do |bloc|
-          p bloc.coordinates_array
           if bloc.collision_right(@player.coordinates_predictives, @bg_x) == false
             @move_right = true
           else
@@ -82,24 +81,26 @@ class Game < Gosu::Window
     # Check the gravity
     unless @jump_allow == false
       @map.block_array.each do |bloc|
-        if bloc.collision(@player.coordinates_predictives, @bg_x) == true
+        if bloc.collision_bottom(@player.coordinates_predictives, @bg_x) == true
           # p @player.predictive_coordinates_check
           # p bloc.bloc_coordinates_check
-          @gravity = true
+          @gravity = false
           @player.coordinates[3] = 0
+          # byebug
           break
         end
-        @gravity = false
+        @gravity = true
       end
-
-      if @gravity == false  
+      if @gravity == true  
         @player.gravity
       end
+      # Check if jump is allowed
     end
     
-    # Check if jump is allowed
-    @jump_allow = @player.jump_allow_check
-    @player.move(WIDTH, @bg_x, @move_right, @move_left)
+    
+      @jump_allow = @player.jump_allow_check
+      @player.move(WIDTH, @bg_x, @move_right, @move_left)
+    
   end
 
   def draw

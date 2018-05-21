@@ -112,23 +112,17 @@ class Player
     # @player_x %= sc_wdth
     @vel_x *= 0.95
     jump_height_variation
+    @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+    @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
 
   # Character gravity
   def gravity
     @vel_y += Gosu.offset_y(100, @y_speed)
     @player_y += @vel_y * 100
+    @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+    @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
-
-  # # Character coordinates and velocity
-  # def player_coordinates_check
-  #   @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
-  # end
-
-  # # Character predictive coordinates
-  # def predictive_coordinates_check
-  #   @coordinates_array = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
-  # end
 
   # Draw character
   def draw
