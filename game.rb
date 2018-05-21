@@ -12,7 +12,6 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
     self.caption = 'Mario like'
     @bg_x = 0
-    # @background = Gosu::Image.new('image/background.png', tileable: true)
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new

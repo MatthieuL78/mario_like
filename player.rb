@@ -15,6 +15,7 @@ class Player
     @jump_height_max = 30
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
+    @jump_top = true
   end
 
   # Teleport the caracter
@@ -32,16 +33,28 @@ class Player
   end
 
   def jump_height_variation(bloc_array, gravity, bg_x)
-    jump_go_up if @jump_delta > 0
+    jump_go_up(bloc_array, bg_x) if @jump_delta > 0
     jump_go_down(bloc_array, gravity, bg_x) if @jump_delta < 0
     check_jump
   end
 
-  def jump_go_up
+  def jump_go_up(bloc_array, bg_x)
     p " UP = #{@jump_delta}"
     @jump_delta.times do
-      @vel_y -= Gosu.offset_y(100, @y_speed)
-      @player_y -= @vel_y
+      # stop by block
+      bloc_array.each do |bloc|
+        unless bloc.coordinates_array[1] + bloc.coordinates_array[3] > @player_y
+          if bloc.collision_top(@coordinates_predictives, bg_x) == true
+            @jump_top = false
+            @vel_y  = 0
+            break
+          end
+        end
+      end
+      unless @jump_top == false
+        @vel_y -= Gosu.offset_y(100, @y_speed)
+        @player_y -= @vel_y
+      end
     end
     p " UP = #{@vel_y}"
     @jump_delta -= 1
@@ -53,11 +66,8 @@ class Player
       # gravity
       bloc_array.each do |bloc|
         if bloc.collision_bottom(@coordinates_predictives, bg_x) == true
-          # p @player.predictive_coordinates_check
-          # p bloc.bloc_coordinates_check
           gravity = false
           @vel_y  = 0
-          # byebug
           break
         end
       end
@@ -72,7 +82,7 @@ class Player
 
   def check_jump
     return false unless @jump_allow == false
-    if @jump_delta.zero?
+    if @jump_delta.zero? || @jump_top == false
       @vel_y = 0
       @jump_delta = @down_y
       @down_y = 0

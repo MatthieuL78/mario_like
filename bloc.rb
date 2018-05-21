@@ -11,14 +11,16 @@ class Bloc
   end
 
   # NOT DONE
-  def collision_top(player, background_x)    
+  def collision_top(player, background_x)  
+  # p  @bloc_y + @height
+  # p player[1] - player[5] /2
     if (player[0] - player[4] /2 < @bloc_x + @width + background_x - 3) && (@bloc_x + @width + background_x - 3 < player[0] + player[4] / 2)
-      if (@bloc_y < player[1] + player[5] /2)
+      if (@bloc_y + @height > player[1] - player[5] /2)
         p 'shit 1'
         return true
       end
     elsif (@bloc_x + background_x - 3 < player[0] + player[4] / 2) && (player[0] + player[4] / 2 < @bloc_x + @width + background_x - 3)
-      if (@bloc_y < player[1] + player[5] /2)
+      if (@bloc_y + @height > player[1] - player[5] /2)
         p 'shit 2'
         return true
       end
@@ -27,18 +29,20 @@ class Bloc
     return false
   end
 
-  def collision_bottom(player, background_x)    
+  def collision_bottom(player, background_x)
+  # p @bloc_y 
+  # p player[1] + player[5] /2
     if (player[0] - player[4] /2 < @bloc_x + @width + background_x - 3) && (@bloc_x + @width + background_x - 3 < player[0] + player[4] / 2)
       if (@bloc_y < player[1] + player[5] /2)
-        p 'shit 1'
+        # p 'shit 1'
         return true
       end
     elsif (@bloc_x + background_x - 3 < player[0] + player[4] / 2) && (player[0] + player[4] / 2 < @bloc_x + @width + background_x - 3)
       if (@bloc_y < player[1] + player[5] /2)
-        p 'shit 2'
+        # p 'shit 2'
         return true
       end
-      p 'shit 3'
+      # p 'shit 3'
     end
     return false
   end
