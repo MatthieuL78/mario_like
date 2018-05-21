@@ -14,7 +14,7 @@ class Player
     @jump_allow = true
     @jump_height_max = 30
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
-    @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
+    @coordinates_predictives = [@player_x + 1, @player_y + 1, @player_x - 1, @player_y - 1, @width, @height]
     @jump_top = true
   end
 
