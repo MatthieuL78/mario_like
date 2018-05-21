@@ -30,23 +30,28 @@ class Player
 
   def jump_height_variation
     jump_go_up if @jump_delta > 0
-    # jump_go_down if @jump_delta < 0
+    jump_go_down if @jump_delta < 0
     check_jump
   end
 
   def jump_go_up
+    p " UP = #{@jump_delta}"
     @jump_delta.times do
       @vel_y -= Gosu.offset_y(100, @y_speed)
       @player_y -= @vel_y
     end
+    p " UP = #{@vel_y}"
     @jump_delta -= 1
   end
 
   def jump_go_down
+    p " DOWN = #{@jump_delta}"
     (@jump_delta * -1).times do
+      # gravity
       @vel_y += Gosu.offset_y(100, @y_speed)
       @player_y += @vel_y
     end
+    p " DOWN = #{@vel_y}"
     @jump_delta += 1
   end
 
@@ -104,15 +109,18 @@ class Player
 
   # Character gravity
   def gravity
-    p @vel_y
-    @vel_y += Gosu.offset_y(100, @y_speed)
-    @player_y += @vel_y
-    # p false
+    # @vel_y += Gosu.offset_y(100, @y_speed)
+    # @player_y += @vel_y * 100
   end
 
   # Character coordinates and velocity
   def player_coordinates_check
     @coordinates_array = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+  end
+
+  # Character predictive coordinates
+  def predictive_coordinates_check
+    @coordinates_array = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
 
   # Draw character
