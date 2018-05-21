@@ -15,7 +15,7 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 150)
+    @player.warp(50, 180)
     @jump_allow = true
     @gravity = false
     @collision_side = false
@@ -79,6 +79,7 @@ class Game < Gosu::Window
       end
     end
 
+
     # Check the gravity
     unless @jump_allow == false
       @map.block_array.each do |bloc|
@@ -86,7 +87,6 @@ class Game < Gosu::Window
           # p @player.predictive_coordinates_check
           # p bloc.bloc_coordinates_check
           @gravity = false
-          @player.coordinates[3] = 0
           # byebug
           break
         end
@@ -118,5 +118,5 @@ class Game < Gosu::Window
 end
 
 my_game = Game.new
-# my_game.fullscreen = true
+my_game.fullscreen = true
 my_game.show

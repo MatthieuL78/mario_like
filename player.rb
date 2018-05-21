@@ -1,6 +1,6 @@
 # Player class
 class Player
-  attr_accessor :coordinates, :coordinates_predictives
+  attr_accessor :coordinates, :coordinates_predictives, :vel_y
   def initialize
     @image = Gosu::Image.new('image/mario.png')
     @player_x = 50
@@ -39,7 +39,6 @@ class Player
   end
 
   def jump_go_up(bloc_array, bg_x)
-    p " UP = #{@jump_delta}"
     @jump_delta.times do
       # stop by block
       bloc_array.each do |bloc|
@@ -56,27 +55,23 @@ class Player
         @player_y -= @vel_y
       end
     end
-    p " UP = #{@vel_y}"
     @jump_delta -= 1
   end
 
   def jump_go_down(bloc_array, gravity, bg_x)
-    p " DOWN = #{@jump_delta}"
     (@jump_delta * -1).times do
       # gravity
       bloc_array.each do |bloc|
         if bloc.collision_bottom(@coordinates_predictives, bg_x) == true
           gravity = false
           @vel_y = 0
+          @jump_delta == -2
           break
         end
       end
-      unless gravity == false
-        @vel_y += Gosu.offset_y(100, @y_speed)
-        @player_y += @vel_y
-      end
+      # p @jump_delta
+      gravity
     end
-    p " DOWN = #{@vel_y}"
     @jump_delta += 1
   end
 
@@ -89,6 +84,7 @@ class Player
     elsif @jump_delta == -1
       @vel_y = 0
       @jump_allow = true
+          p 'prout'
     end
   end
 
@@ -145,8 +141,9 @@ class Player
   # Character gravity
   def gravity
     @vel_y += Gosu.offset_y(100, @y_speed)
-    @player_y += @vel_y * 100
+    @player_y += @vel_y * 25
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
+    p @coordinates
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
 
