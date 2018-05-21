@@ -3,8 +3,8 @@ class Player
   attr_accessor :coordinates, :coordinates_predictives, :vel_y
   def initialize
     @image = Gosu::Image.new('image/mario.png')
-    @player_x = 50
-    @player_y = 180
+    @player_x = 40
+    @player_y = 50
     @vel_x = @vel_y = 0.0
     @height = 33
     @width = 22
@@ -12,7 +12,7 @@ class Player
     @y_speed = 0.005
     @jump_delta = 0
     @jump_allow = true
-    @jump_height_max = 30
+    @jump_height_max = 25
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
     @coordinates_predictives = [@player_x + 1, @player_y + 1, @player_x - 1, @player_y - 1, @width, @height]
     @jump_top = true
@@ -35,7 +35,7 @@ class Player
   def jump_height_variation(bloc_array, gravity, bg_x)
     jump_go_up(bloc_array, bg_x) if @jump_delta > 0
     jump_go_down(bloc_array, gravity, bg_x) if @jump_delta < 0
-    check_jump
+    check_jump(gravity)
   end
 
   def jump_go_up(bloc_array, bg_x)
@@ -68,14 +68,14 @@ class Player
           @jump_delta == -2
           break
         end
-      end
-      # p @jump_delta
-      gravity
+      end   
+      @vel_y += Gosu.offset_y(100, @y_speed)
+      @player_y += @vel_y
     end
     @jump_delta += 1
   end
 
-  def check_jump
+  def check_jump(gravity)
     return false unless @jump_allow == false
     if @jump_delta.zero? || @jump_top == false
       @vel_y = 0
@@ -84,7 +84,6 @@ class Player
     elsif @jump_delta == -1
       @vel_y = 0
       @jump_allow = true
-          p 'prout'
     end
   end
 
@@ -128,11 +127,15 @@ class Player
       false
     end
     # Block the ice effect
-    # @vel_x = 0 if Gosu.button_down? Gosu::KB_RIGHT and Gosu.button_down? Gosu::KB_LEFT
+    # @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT or Gosu.button_down? Gosu::KB_LEFT
+    # @vel_x = 0 unless Gosu.button_down? Gosu::KB_RIGHT and Gosu.button_down? Gosu::KB_LEFT
     # @player_x %= sc_wdth
-    @vel_x *= 0.95
+
+    # We decrease the velocity
+    # @vel_x *= 0.8
+    
     # If jump_delta is equal 0 it's not do
-    jump_height_variation(bloc_array, gravity, bg_x) unless @jump_delta.zero?
+    # jump_height_variation(bloc_array, gravity, bg_x) unless @jump_delta.zero?
 
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
@@ -143,7 +146,6 @@ class Player
     @vel_y += Gosu.offset_y(100, @y_speed)
     @player_y += @vel_y * 25
     @coordinates = [@player_x, @player_y, @vel_x, @vel_y, @width, @height]
-    p @coordinates
     @coordinates_predictives = [@player_x + 1, @player_y - 1, @player_x - 1, @player_y + 1, @width, @height]
   end
 

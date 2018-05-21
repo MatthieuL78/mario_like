@@ -6,7 +6,9 @@ Try to make a mario like game in Ruby. I am using the following gems :
 
 ## To-do list
 * Check ice effect
-* top bottom collision
+* check movement axe x 
+* Check collision bottom (after jump)
+* Do collision diagonal bot-left & bot-right
 
 ## My help
 I used the following links to create this game :

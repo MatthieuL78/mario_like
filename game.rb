@@ -15,7 +15,7 @@ class Game < Gosu::Window
     @map = Map.new
     @map.json_quadrillage('mario_tileset.json')
     @player = Player.new
-    @player.warp(50, 180)
+    @player.warp(40, 50)
     @jump_allow = true
     @gravity = false
     @collision_side = false
@@ -78,24 +78,27 @@ class Game < Gosu::Window
         @player.jump_initialization
       end
     end
-
+    
+    p @move_left
 
     # Check the gravity
+    # unless we can jump => if there is colision with the floor
     unless @jump_allow == false
+      # we check every tiles if it s below the character
       @map.block_array.each do |bloc|
         if bloc.collision_bottom(@player.coordinates_predictives, @bg_x) == true
-          # p @player.predictive_coordinates_check
-          # p bloc.bloc_coordinates_check
+          # if there is a collision, we stop the gravity
           @gravity = false
-          # byebug
+          # we break the loop
           break
         end
+        # if there is no collision the gravity is working
         @gravity = true
       end
+      # if the gravity is working we call the method gravity
       if @gravity == true
         @player.gravity
       end
-      # Check if jump is allowed
     end
 
       @jump_allow = @player.jump_allow_check
@@ -118,5 +121,5 @@ class Game < Gosu::Window
 end
 
 my_game = Game.new
-my_game.fullscreen = true
+# my_game.fullscreen = true
 my_game.show

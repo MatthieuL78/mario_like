@@ -17,7 +17,7 @@ class Map
   def json_quadrillage(json_file)
     @json_file = File.read(json_file)
     my_tile_hash = JSON.parse(@json_file)
-    my_tile_hash['mon quadrillage_essai']
+    my_tile_hash['mon quadrillage_essai_bis']
   end
 
   def tile_to_block(tile_array)
